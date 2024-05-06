@@ -13,9 +13,9 @@ class Project(models.Model):
   title = models.CharField(max_length=60, null=False, blank=False)
   subtitle = models.CharField(max_length=135, null=False, blank=False)
   location = models.CharField(max_length=50, null=False, blank=False)
-  image = models.CharField(null=False, blank=False)
-  video = models.CharField(null=False, blank=False)
-  type = models.CharField(null=False, blank=False)
+  image = models.CharField(max_length=550, null=False, blank=False)
+  video = models.CharField(max_length=550, null=False, blank=False)
+  type = models.CharField(max_length=50, null=False, blank=False)
   goal = models.FloatField(null=False, blank=False, validators=[MinValueValidator(0)])
   main_category = models.CharField(max_length=50, null=False, blank=False)
   main_subcat = models.CharField(max_length=50, null=False, blank=False)
@@ -90,3 +90,24 @@ scheduler.add_job(
   'cron',
   hour=5
 )
+
+class Like(models.Model):
+  user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+  project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+  def to_dict(self):
+    return {
+      "userId": self.user_id,
+      "projectId": self.project_id,
+    }
+
+class Story(models.Model):
+  project_id = models.OneToOneField(Project, on_delete=models.CASCADE)
+  title = models.CharField(max_length=60, null=False, blank=False)
+  content = models.TextField(null=False, blank=False)
+
+  def to_dict(self):
+    return {
+      "title": self.title,
+      "content": self.content,
+    }

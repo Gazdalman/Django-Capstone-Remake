@@ -1,4 +1,3 @@
 import os
 
-environment = os.envrion.get('DJANGO_ENV')
-
+environment = os.environ.get('DJANGO_ENV')

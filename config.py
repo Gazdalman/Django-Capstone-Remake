@@ -1,3 +1,3 @@
 import os
 
-environment = os.getenv('DJANGO_ENV')
+# environment = os.getenv('DJANGO_ENV')
