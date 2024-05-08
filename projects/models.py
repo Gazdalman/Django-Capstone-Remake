@@ -9,7 +9,7 @@ from util import remove_file_from_s3
 
 # Create your models here.
 class Project(models.Model):
-  user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
   title = models.CharField(max_length=60, null=False, blank=False)
   subtitle = models.CharField(max_length=135, null=False, blank=False)
   location = models.CharField(max_length=50, null=False, blank=False)
@@ -29,7 +29,7 @@ class Project(models.Model):
   def to_dict(self):
     return {
       "id": self.id,
-      "userId": self.user_id,
+      "userId": self.user,
       "title": self.title,
       "subtitle": self.subtitle,
       "location": self.location,
@@ -51,11 +51,15 @@ class Project(models.Model):
       "earnedToday": self.earned_today,
     }
 
-@receiver(models.signals.pre_delete, sender=Project)
-def on_project_delete(sender, instance, **kwargs):
-  remove_file_from_s3(instance.image)
-  if instance.video:
-    remove_file_from_s3(instance.video)
+    def __str__(self):
+      return self.name
+
+
+# @receiver(models.signals.pre_delete, sender=Project)
+# def on_project_delete(sender, instance, **kwargs):
+#   remove_file_from_s3(instance.image)
+#   if instance.video:
+#     remove_file_from_s3(instance.video)
 
 
 def reset_earned_today():
