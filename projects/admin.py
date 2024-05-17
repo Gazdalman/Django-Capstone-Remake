@@ -8,10 +8,10 @@ admin.site.register(Story)
 admin.site.register(Like)
 
 
-# Unregister the provided model admin:
-admin.site.unregister(User)
+# # Unregister the provided model admin:
+# admin.site.unregister(User)
 
-from django.contrib.auth.admin import UserAdmin
-@admin.register(User)
-class NewAdmin(UserAdmin):
-    pass
+# from django.contrib.auth.admin import UserAdmin
+# @admin.register(User)
+# class NewAdmin(UserAdmin):
+#     pass

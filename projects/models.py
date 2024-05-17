@@ -1,6 +1,6 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
-from django.contrib.auth.models import User
+from users.models import User
 from django.core.validators import MinValueValidator
 from django.db import models, transaction
 from django.dispatch import receiver
@@ -51,8 +51,8 @@ class Project(models.Model):
       "earnedToday": self.earned_today,
     }
 
-    def __str__(self):
-      return self.name
+  def __str__(self):
+    return self.title
 
 
 # @receiver(models.signals.pre_delete, sender=Project)
