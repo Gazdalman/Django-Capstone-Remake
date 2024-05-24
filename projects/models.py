@@ -52,7 +52,7 @@ class Project(models.Model):
     }
 
   def __str__(self):
-    return self.title
+    return f'{self.title} by {self.user.display_name}'
 
 
 # @receiver(models.signals.pre_delete, sender=Project)
