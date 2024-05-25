@@ -12,8 +12,35 @@ class Reward(models.Model):
   unlimited = models.BooleanField(default=False, null=False, blank=False)
   delivery_date = models.DateTimeField(null=False, blank=False)
 
+  def __str__(self):
+    return f'{self.title}: Project {self.project.id}'
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "projectId": self.project_id,
+      "image": self.image,
+      "title": self.title,
+      "description": self.description,
+      "shipping": self.shipping,
+      "physicalItems": self.physical_items,
+      "amount": self.amount,
+      "unlimited": self.unlimited,
+      "quantity": self.quantity,
+      "deliveryDate": self.delivery_date,
+    }
+
 class RewardItem(models.Model):
   reward = models.ForeignKey(Reward, on_delete=models.CASCADE)
   title = models.CharField(max_length=50, null=False, blank=False)
   quantity = models.IntegerField(null=False, blank=False)
   image = models.CharField(max_length=255)
+
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "rewardId": self.reward_id,
+      "title": self.title,
+      "image": self.image,
+      "quantity": self.quantity
+    }
