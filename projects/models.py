@@ -9,7 +9,7 @@ from util import remove_file_from_s3
 
 # Create your models here.
 class Project(models.Model):
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
   title = models.CharField(max_length=60, null=False, blank=False)
   subtitle = models.CharField(max_length=135, null=False, blank=False)
   location = models.CharField(max_length=50, null=False, blank=False)
@@ -106,7 +106,7 @@ class Like(models.Model):
     }
 
 class Story(models.Model):
-  project_id = models.OneToOneField(Project, on_delete=models.CASCADE)
+  project_id = models.OneToOneField(Project, on_delete=models.CASCADE, related_name='story')
   title = models.CharField(max_length=60, null=False, blank=False)
   content = models.TextField(null=False, blank=False)
 
