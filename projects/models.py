@@ -46,13 +46,13 @@ class Project(models.Model):
       "secondSub": self.second_subcat if self.second_subcat else '',
       "rewards": sorted([reward.to_dict() for reward in self.rewards], key=lambda reward : reward['amount']),
       "launched": self.launch_date <= datetime.now(),
-      "user": self.user.display_name,
+      # "user": self.user.display_name,
       "earned": sum([backer.amount for backer in self.backers]),
       "earnedToday": self.earned_today,
     }
 
   def __str__(self):
-    return f'{self.title} by {self.user.display_name}'
+    return f'{self.title} by {self.user.username}'
 
 
 # @receiver(models.signals.pre_delete, sender=Project)
