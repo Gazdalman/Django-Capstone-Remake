@@ -11,7 +11,7 @@ def home(request):
 
 def demo_project(request):
   Project.objects.create(
-    user_id=User.objects.get(pk=1).id,
+    user_id=User.objects.get(pk=2).id,
     title='demo_title',
     subtitle='demo_subtitle',
     location='demo_location',
