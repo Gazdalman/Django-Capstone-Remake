@@ -7,10 +7,12 @@ def home(request):
   return HttpResponse('<h1>I hate this</h1>')
 
 def demo_user(request):
-  User.objects.create(
+  user = User.objects.create_user(
     username='demo',
-    password='password'
+    password='password',
+    email='demouser@aa.io',
+    first_name='Demo',
+    last_name='User'
   )
 
-  return HttpResponse('<h1>Done</h1>')
-
+  return HttpResponse(f'<h1>{user.to_dict()}</h1>')

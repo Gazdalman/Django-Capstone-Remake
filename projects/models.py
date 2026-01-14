@@ -27,6 +27,10 @@ class Project(models.Model):
   earned_today = models.FloatField(default=0)
 
   def to_dict(self):
+    story_data = ""
+    if hasattr(self, 'story'):
+      story_data = self.story.to_dict()
+
     return {
       "id": self.id,
       "userId": self.user,
@@ -39,15 +43,18 @@ class Project(models.Model):
       "goal": self.goal,
       "launchDate": self.launch_date,
       "endDate": self.end_date,
-      "story": [story.to_dict() for story in self.story][0] if self.story else "",
+      "story": story_data,
       "mainCategory": self.main_category,
       "mainSub": self.main_subcat,
       "secondCat": self.second_cat if self.second_cat else '',
       "secondSub": self.second_subcat if self.second_subcat else '',
-      "rewards": sorted([reward.to_dict() for reward in self.rewards], key=lambda reward : reward['amount']),
+      "rewards": sorted(
+                [reward.to_dict() for reward in self.rewards.all()],
+                key=lambda reward: reward['amount']
+            ),
       "launched": self.launch_date <= datetime.now(),
       # "user": self.user.display_name,
-      "earned": sum([backer.amount for backer in self.backers]),
+      "earned": sum([backer.amount for backer in self.backers.all()]),
       "earnedToday": self.earned_today,
     }
 

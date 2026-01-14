@@ -10,7 +10,7 @@ def home(request):
   return HttpResponse('<h1>This is this</h1>')
 
 def demo_project(request):
-  Project.objects.create(
+  project = Project.objects.create(
     user_id=User.objects.get(pk=2).id,
     title='demo_title',
     subtitle='demo_subtitle',
@@ -28,4 +28,4 @@ def demo_project(request):
     launched=True,
   )
 
-  return HttpResponse('<h1>Done!</h1>')
+  return HttpResponse(f'<h1>{project.to_dict()}</h1>')
