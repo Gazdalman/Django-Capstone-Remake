@@ -1,14 +1,20 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.http import HttpResponse
-from datetime import datetime
-from django.contrib.auth.models import User
+# from datetime import datetime
+# from django.contrib.auth.models import User
 from .models import *
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Project
+from .serializers import ProjectSerializer
+
+@api_view(['GET'])
+def get_projects(request):
+    projects = Project.objects.all()
+    serializer = ProjectSerializer(projects, many=True)
+    return Response(serializer.data)
 
 # Create your views here.
-def home(request):
-  # projects = Project.objects.filter(launched=True).order_by('earned_today')[:10]
-  return HttpResponse('<h1>This is this</h1>')
-
 def demo_project(request):
   project = Project.objects.create(
     user_id=User.objects.get(pk=2).id,
